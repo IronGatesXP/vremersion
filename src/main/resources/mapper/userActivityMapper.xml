@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.vremersion.Dao.UserActivityDao">
+
+    <resultMap id="BaseResultMap" type="User">
+        <id property="id" column="id" />
+        <result property="userName" column="user_name" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+
+    </resultMap>
+
+    <select id="selectUser" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            user where user_name = #{userName}
+    </select>
+
+    <insert id="register">
+        insert into user (id,user_name,password,email)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updatePassword">
+        update user
+        set password = #{newPassword}
+        where user_name = #{userName}
+    </update>
+
+    <select id="selectUpdatePasswordUser" resultMap="BaseResultMap">
+        select *
+        from user
+        where user_name = #{userName} and password = #{password}
+    </select>
+
+
+    <insert id="saveReset">
+        insert into reset_table
+        (reset_email,reset_signature,reset_outtime)values(#{email},#{signature},#{outtime})
+    </insert>
+
+    <update id="resetTable">
+        update user
+        set password = #{password}
+        where email = #{email}
+    </update>
+
+    <resultMap id="ResetResultMap" type="Reset">
+        <id property="id" column="reset_id" />
+        <result property="email" column="reset_email" />
+        <result property="signature" column="reset_signature" />
+        <result property="outtime" column="reset_outtime" />
+    </resultMap>
+
+    <select id="selectResetByEmail" resultMap="ResetResultMap">
+        select *
+        from reset_table
+        where reset_email = #{email}
+    </select>
+
+    <delete id="deleteResetByEmail">
+        delete from
+        reset_table
+        where reset_email = #{email}
+    </delete>
+
+</mapper>

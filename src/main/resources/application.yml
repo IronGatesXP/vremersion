@@ -1,0 +1,32 @@
+mybatis:
+  typeAliasesPackage: com.vremersion.Entity
+  mapperLocations: classpath:mapper/*.xml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/vredu?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: xp19940912
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  mail:
+    host: smtp.163.com
+    username: xiongpengphy@163.com
+    password: disanfang0912
+    properties:
+      mail:
+        smtp:
+          auth: true
+          strattls:
+            enable: true
+            required: true
+
+  mvc:
+    view:
+      suffix: .html
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/
